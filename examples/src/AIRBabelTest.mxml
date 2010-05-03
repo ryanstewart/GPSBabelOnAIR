@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			 xmlns:s="library://ns.adobe.com/flex/spark" 
+			 xmlns:mx="library://ns.adobe.com/flex/mx"
+			 applicationComplete="application1_applicationCompleteHandler(event)">
+
+	<fx:Script>
+		<![CDATA[
+			import com.digitalbackcountry.gpsbabel.Format;
+			import com.digitalbackcountry.gpsbabel.GPSBable;
+			import com.digitalbackcountry.gpsbabel.formats.GPXOptions;
+			import com.digitalbackcountry.gpsbabel.formats.Garmin;
+			
+			import mx.events.FlexEvent;
+			
+			public var babel:GPSBable;
+			
+			protected function open_clickHandler(event:MouseEvent):void
+			{	
+				var file:File = new File();
+					file.browseForOpen("Select File");
+					file.addEventListener(Event.SELECT,onSelect);
+			}
+			
+			protected function onSelect(event:Event):void
+			{
+				babel = new GPSBable(event.target as File);
+				trace('done');
+			}
+
+			protected function convert_clickHandler(event:MouseEvent):void
+			{
+				var file:File = new File();
+				file.browseForOpen("Select File");
+				file.addEventListener(Event.SELECT,onFileSelect);
+			}
+
+			protected function onFileSelect(event:Event):void
+			{
+				var gpxOpt:GPXOptions = new GPXOptions()
+					gpxOpt.base_url_for_link_tag = 'http://blah.com';
+					gpxOpt.gpx_version = GPXOptions.GPX_VERSION_11;
+				var gpxFormat:Format = new Format(Format.GPX,gpxOpt);
+				var kmlFormat:Format = new Format(Format.KML);
+					
+				babel.convertToFile(event.target as File,kmlFormat,gpxFormat,'test.kml');
+				//babel.convert(event.target as File,"gpx",Garmin.GARMIN_MAPSOURCE_MPS);
+			}
+			
+
+			protected function application1_applicationCompleteHandler(event:FlexEvent):void
+			{
+				
+			}
+
+		]]>
+	</fx:Script>
+
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:Button id="open" label="Select GPS Babel" click="open_clickHandler(event)" />
+	<s:Button id="convert" label="Convert" click="convert_clickHandler(event)" />
+</mx:Application>

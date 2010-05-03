@@ -1,0 +1,13 @@
+GPSBabelOnAIR
+
+This is a skeleton project, if you're interested in it, please let me know.
+
+This library provides an ActionScript 3 wrapper to GPSBabel. It uses the NativeProcess
+API in AIR 2 to call directly to GPSBabel from an AIR application. More info on AIR 2
+can be found at http://labs.adobe.com/technologies/air2/
+
+An example of how to use the NativeProcess API can be found in the examples folder.
+
+=Ryan
+ryan@adobe.com
+http://blog.digitalbackcountry.com
